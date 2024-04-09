@@ -18,7 +18,7 @@ app.use(express.json());
 
 const massageSchema = zod.object({
   name: zod.string(),
-  email: zod.string(),
+  email: zod.string().email(),
   message: zod.string(),
 })
 
