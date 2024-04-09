@@ -58,25 +58,31 @@ app.get("/messages", async (req, res) => {
 
 app.post("/message", (req, res) => {
   try {
-    const validationError = massageSchema.parse(req.body);
+    const validationError = massageSchema.safeParse(req.body);
+
     if (validationError.error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json({ error: validationError.error.message });
     }
-    const { name, email, message } = req.body;
+
+    const { name, email, message } = validationError.data;
+
     const newMessage = new Message({
       name,
       email,
       message,
       createdAt: new Date()
     });
+
     newMessage.save();
-    res.json({ message: "Message sent successfully!"});
+
+    res.status(201).json({ message: "Message sent successfully!"});
   } catch (error) {
-    console.log(error);
-    res.json({ error: error.message });
+    console.error("Error:", error);
+
+    res.status(500).json({ error: "Internal server error" });
   }
- 
-})
+});
+
 
 
 
