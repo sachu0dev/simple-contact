@@ -55,13 +55,12 @@ app.get("/messages", async (req, res) => {
 })
 
 
-
 app.post("/message", (req, res) => {
   try {
     const validationError = massageSchema.safeParse(req.body);
 
     if (validationError.success === false) {
-      return res.status(400).json({ error: "invalid emanil" });
+      return res.status(400).json({ error: "invalid email" });
     }
 
     const { name, email, message } = validationError.data;
@@ -75,13 +74,14 @@ app.post("/message", (req, res) => {
 
     newMessage.save();
 
-    res.status(201).json({ message: "Message sent successfully!"});
+    return res.status(201).json({ message: "Message sent successfully!"});
   } catch (error) {
     console.error("Error:", error);
 
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
+
 
 
 
