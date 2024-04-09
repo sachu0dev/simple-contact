@@ -44,7 +44,7 @@ const messageSchema = new mongoose.Schema({
 const Message = mongoose.model('Message', messageSchema);
 
 
-app.get("/message", async (req, res) => {
+app.get("/messages", async (req, res) => {
   try {
     const messages = await Message.find();
     res.json(messages);
