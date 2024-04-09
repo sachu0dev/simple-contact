@@ -3,6 +3,7 @@ const app = express();
 const zod = require('zod');
 const cors = require('cors');
 
+app.use(cors());
 var mongoose = require('mongoose');
 var mongoDB = 'mongodb+srv://admin:sachu@typingpanda.mgdkzdd.mongodb.net/massage';
 mongoose.connect(mongoDB);
@@ -56,16 +57,22 @@ app.get("/message", async (req, res) => {
 
 
 app.post("/message", (req, res) => {
-  const { error } = massageSchema.safeParse(req.body);
-  const { name, email, message } = req.body;
-  const newMessage = new Message({
-    name,
-    email,
-    message,
-    createdAt: new Date()
-  });
-  newMessage.save();
-  res.send("Message sent successfully!");
+  try {
+    const { error } = massageSchema.safeParse(req.body);
+    const { name, email, message } = req.body;
+    const newMessage = new Message({
+      name,
+      email,
+      message,
+      createdAt: new Date()
+    });
+    newMessage.save();
+    res.json({ message: "Message sent successfully!"});
+  } catch (error) {
+    console.log(error);
+    res.json({ error: error.message });
+  }
+ 
 })
 
 
