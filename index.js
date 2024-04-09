@@ -58,8 +58,8 @@ app.get("/messages", async (req, res) => {
 
 app.post("/message", (req, res) => {
   try {
-    const { error } = massageSchema.parse(req.body);
-    if (error) {
+    const validationError = massageSchema.parse(req.body);
+    if (validationError.error) {
       return res.status(400).json({ error: error.message });
     }
     const { name, email, message } = req.body;
