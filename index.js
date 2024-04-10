@@ -1,19 +1,26 @@
-const express = require('express');
-const app = express();
-const zod = require('zod');
-const cors = require('cors');
-var mongoose = require('mongoose');
+import cors from 'cors';
+import express from 'express';
+import mongoose from 'mongoose';
+import zod from 'zod';
+const app = express()
 var mongoDB = 'mongodb+srv://admin:sachu@typingpanda.mgdkzdd.mongodb.net/massage';
-app.use(cors());
 
-mongoose.connect(mongoDB);
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(express.json());
+app.options('*', cors());
 
+const connectDb = async () => {
+  try {
+      await mongoose.connect(mongoDB);
+      console.log("MongoDB database connected");
+
+  } catch (err) {
+      console.error("Error connecting to database:", err);
+      throw err; 
+  }
+}
+connectDb();
 
 
 const massageSchema = zod.object({
@@ -89,6 +96,6 @@ app.post("/message", (req, res) => {
 
 
 
-app.listen(3001, () => {
+app.listen(3000, () => {
   console.log('Listening on port 3000');
 });
