@@ -71,7 +71,7 @@ app.post("/message", (req, res) => {
       message,
       createdAt: new Date()
     });
-
+    console.log(newMessage);
     newMessage.save();
 
     return res.status(201).json({ message: "Message sent successfully!"});
