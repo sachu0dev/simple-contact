@@ -2,15 +2,15 @@ const express = require('express');
 const app = express();
 const zod = require('zod');
 const cors = require('cors');
-
-app.use(cors());
 var mongoose = require('mongoose');
 var mongoDB = 'mongodb+srv://admin:sachu@typingpanda.mgdkzdd.mongodb.net/massage';
+app.use(cors());
+
 mongoose.connect(mongoDB);
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
 
 app.use(express.json());
 
@@ -89,4 +89,6 @@ app.post("/message", (req, res) => {
 
 
 
-app.listen(3000);
+app.listen(3001, () => {
+  console.log('Listening on port 3000');
+});
