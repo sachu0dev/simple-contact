@@ -8,7 +8,7 @@ var mongoDB = 'mongodb+srv://admin:sachu@typingpanda.mgdkzdd.mongodb.net/massage
 
 
 app.use(express.json());
-app.options('*', cors());
+app.use(cors()); 
 
 const connectDb = async () => {
   try {
