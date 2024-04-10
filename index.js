@@ -8,7 +8,11 @@ var mongoDB = 'mongodb+srv://admin:sachu@typingpanda.mgdkzdd.mongodb.net/massage
 
 
 app.use(express.json());
-app.use(cors()); 
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 const connectDb = async () => {
   try {
