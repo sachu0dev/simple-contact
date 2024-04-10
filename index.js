@@ -60,7 +60,7 @@ app.post("/message", (req, res) => {
     const validationError = massageSchema.safeParse(req.body);
 
     if (validationError.success === false) {
-      return res.status(400).json({ error: "invalid email" });
+      return res.status(400).json({ error: "invalid input" });
     }
 
     const { name, email, message } = validationError.data;
